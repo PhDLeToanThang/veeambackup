@@ -40,3 +40,6 @@ Check it out here.
 
 **Sum-up:**
 It also simplifies the configuration and deployment of the restoration site with the new Veeam PN (Powered Network), which is a complete networking solution. You can also use Veeam PN for easy migrations of your local workloads into Microsoft Azure.
+
+**Link Download VeeamPN OVA (Virtual Machine):**
+https://1drv.ms/u/s!AtT2yQnThe-ykLYa3oyYiYyPk5Pp6A?e=HtPWlU
