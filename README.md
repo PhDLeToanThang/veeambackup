@@ -29,6 +29,7 @@ Here is another picture from Veeam PN user guide:
 **1. Network Hub:**
   whether installed At Azure or On-premises (for site-to-site scenario) needs to run on at least ESXi/vSphere 5.0 or higher (hardware version 8 or later), needs 1Gb of RAM. For “point-to-site” scenario you need Microsoft Azure account in order to be able to set up an A1 VM at least (1 core, 1.75 GB memory, 70 GB of disk space).
 
+Tham khảo hướng dẫn cài VeeamPN: https://thangletoan.wordpress.com/2021/08/16/cai-va-cau-hinh-openvpn-va-wire-guard-tren-ubuntu-server-18-04-dap-ung-nhu-cau-wfh/
 **2.Site Gateway:**
  The on-premise part also called Site Gateway is an appliance which has a disk size of 3.9Gb (thin provisioned) or 16Gb thick.
 Veeam has an online user guide for Veeam PN where you can follow the different configuration steps or how-tos.
