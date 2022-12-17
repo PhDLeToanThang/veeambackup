@@ -1,6 +1,6 @@
 # veeambackup:
 
-**  Phần 1. Veeam Powered Network (VeeamPN)**
+#  Phần 1. Veeam Powered Network (VeeamPN)
 If you follow Veeam, you have certainly not missed quite a few blog posts about Veeam PN (Powered Network) software. Already during VeeamON 2017, we could see a functional demo, but the solution was not GA at that time. Now Veeam has finally released the final version of Veeam PN and it's available from Azure Marketplace (Hub Appliance) and as an OVA package for local deployment (Site Gateway).
 The product can be used to easily setup VPN connections over a public network.
 
@@ -47,4 +47,4 @@ https://thangletoan.wordpress.com/2021/08/16/cai-va-cau-hinh-openvpn-va-wire-gua
 **Link Download VeeamPN OVA (Virtual Machine):**
 https://1drv.ms/u/s!AtT2yQnThe-ykLYa3oyYiYyPk5Pp6A?e=HtPWlU
 
-**** Phần 2. Cloud VPN Gateway****
+#  Phần 2. Cloud VPN Gateway:
