@@ -48,3 +48,7 @@ https://thangletoan.wordpress.com/2021/08/16/cai-va-cau-hinh-openvpn-va-wire-gua
 https://1drv.ms/u/s!AtT2yQnThe-ykLYa3oyYiYyPk5Pp6A?e=HtPWlU
 
 #  Phần 2. Cloud VPN Gateway:
+
+#  Phần 3. Deploy S3c Object Storage:
+wget https://raw.githubusercontent.com/PhDLeToanThang/veeambackup/master/deploy_s3c_objectstore.sh && bash ./deploy_s3c_objectstore.sh
+
