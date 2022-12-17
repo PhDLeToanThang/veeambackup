@@ -94,11 +94,11 @@ systemctl daemon-reload
 systemctl enable minio
 systemctl start minio
 #Sau đó, ta có thể kiểm tra lại status của service bằng lệnh
-systemctl status minio
+#systemctl status minio
 
 sudo systemctl start minio
 #Như hình trên là minIO đã start thành công.
-sudo systemctl status minio
+#sudo systemctl status minio
 
 #In this step, you will secure access to your Minio server using a private key and public certificate that has been obtained from a certificate authority (CA), in this case Let’s Encrypt. To get a free SSL certificate, you will use Certbot.
 #First, allow HTTP and HTTPS access through your firewall. To do this, open port 80, which is the port for HTTP:
