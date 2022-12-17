@@ -15,7 +15,11 @@ if [ "$run" == n ] ; then
   exit
 else
 
-#Step 1. Install MinIO:
+#Step 1. Install latest version from backports cockpit:
+. /etc/os-release
+sudo apt install -t ${VERSION_CODENAME}-backports cockpit
+
+#Step 2. Install MinIO:
 sudo apt-get update
 wget https://dl.min.io/server/minio/release/linux-amd64/minio
 useradd --system $minio --shell /sbin/nologin
@@ -81,6 +85,7 @@ echo '# Built for ${project.name}-${project.version} (${project.name})' >> minio
 mv minio.service /etc/systemd/system
 #Tiếp theo ta dùng lệnh sau để mở port 9000 trên server:
 sudo ufw allow 9000
+sudo ufw allow 9090
 sudo ufw allow $PORT
 sudo ufw enable
 
