@@ -67,8 +67,8 @@ echo 'AssertFileIsExecutable=/usr/local/bin/minio' >> minio.service
 
 echo '[Service]' >> minio.service
 echo 'WorkingDirectory=/usr/local/' >> minio.service
-echo 'User="$minio"' >> minio.service
-echo 'Group="$minio"' >> minio.service
+echo '#User="$minio"' >> minio.service
+echo '#Group="$minio"' >> minio.service
 echo '# ProtectProc="invisible"' >> minio.service
 echo 'EnvironmentFile=/etc/default/minio' >> minio.service
 echo 'ExecStartPre=/bin/bash -c "if [ -z \"${MINIO_VOLUMES}\" ]; then echo \"Variable MINIO_VOLUMES not set in /etc/default/minio\"; exit 1; fi"' >> minio.service
