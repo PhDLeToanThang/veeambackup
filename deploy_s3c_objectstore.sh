@@ -22,13 +22,16 @@ sudo apt install -t ${VERSION_CODENAME}-backports cockpit
 #Step 2. Install MinIO:
 sudo apt-get update
 wget https://dl.min.io/server/minio/release/linux-amd64/minio
+
 useradd --system $minio --shell /sbin/nologin
 usermod -L $minio
 chage -E0 $minio
 mv minio /usr/local/bin
 chmod +x /usr/local/bin/minio
+
 chown $minio:$minio /usr/local/bin/minio
 
+# check result: ls -l /usr/local/bin/minio
 # Setup MinIO on Ubuntu 18 04 with SSL and client CLI: 
 # https://www.youtube.com/watch?v=UTwb78kOUTk
 
@@ -37,10 +40,10 @@ mkdir /etc/minio
 chown $minio:$minio /etc/minio
 chown $minio:$minio /usr/local/share/minio
 
-sudo touch /etc/default/minio
+#sudo touch /etc/default/minio
 echo 'MINIO_ACCESS_KEY="$minio"' >> /etc/default/minio
 echo 'MINIO_VOLUMES="/usr/local/share/minio/"' >> /etc/default/minio
-echo 'MINIO_OPTS="-C /etc/minio --address $FQDN:9000" --console-address $FQDN:$PORT' >> /etc/default/minio
+echo 'MINIO_OPTS="-C /etc/minio --address $FQDN:9000 --console-address $FQDN:$PORT"' >> /etc/default/minio
 echo 'MINIO_SECRET_KEY="$SECRET"' >> /etc/default/minio
 
 #MINIO_VOLUMES là directory sẽ chứa dữ liệu đã tạo ở trên
@@ -54,7 +57,7 @@ curl -O https://raw.githubusercontent.com/minio/minio-service/master/linux-syste
 sed -i 's/User=minio-user/User=$minio/g' minio.service
 sed -i 's/Group=minio-user/Group=$minio/g' minio.service
 
-sudo touch minio.service
+#sudo touch minio.service
 echo '[Unit]' >> minio.service
 echo 'Description=MinIO' >> minio.service
 echo 'Documentation=https://docs.min.io' >> minio.service
@@ -63,24 +66,19 @@ echo 'After=network-online.target' >> minio.service
 echo 'AssertFileIsExecutable=/usr/local/bin/minio' >> minio.service
 echo '[Service]' >> minio.service
 echo 'WorkingDirectory=/usr/local/' >> minio.service
-echo 'User=$minio' >> minio.service
-echo 'Group=$minio' >> minio.service
-echo 'ProtectProc=invisible' >> minio.service
-echo 'EnvironmentFile=/etc/default/minio' >> minio.service
+echo 'User="$minio"' >> minio.service
+echo 'Group="$minio"' >> minio.service
+echo 'ProtectProc="invisible"' >> minio.service
+echo 'EnvironmentFile="/etc/default/minio"' >> minio.service
 echo 'ExecStartPre=/bin/bash -c "if [ -z \"${MINIO_VOLUMES}\" ]; then echo \"Variable MINIO_VOLUMES not set in /etc/default/minio\"; exit 1; fi"' >> minio.service
 echo 'ExecStart=/usr/local/bin/minio server $MINIO_OPTS $MINIO_VOLUMES' >> minio.service
-echo '# Let systemd restart this service always' >> minio.service
-echo 'Restart=always' >> minio.service
-echo '# Specifies the maximum file descriptor number that can be opened by this process' >> minio.service
+echo 'Restart="always"' >> minio.service
 echo 'LimitNOFILE=1048576' >> minio.service
-echo '# Specifies the maximum number of threads this process can create' >> minio.service
 echo 'TasksMax=infinity' >> minio.service
-echo '# Disable timeout logic and wait until process is stopped' >> minio.service
 echo 'TimeoutStopSec=infinity' >> minio.service
 echo 'SendSIGKILL=no' >> minio.service
 echo '[Install]' >> minio.service
 echo 'WantedBy=multi-user.target' >> minio.service
-echo '# Built for ${project.name}-${project.version} (${project.name})' >> minio.service
 
 mv minio.service /etc/systemd/system
 #Tiếp theo ta dùng lệnh sau để mở port 9000 trên server:
@@ -137,9 +135,9 @@ sudo certbot certonly --standalone -d $FQDN
 
 #Quy trình của Certbot:
 #The certificate and key generated via Certbot needs to be placed inside user's home directory.
-#cp /etc/letsencrypt/live/s3c.cloud.edu.vn/fullchain.pem ~/.minio/certs/CAs/public.crt
-#cp /etc/letsencrypt/live/s3c.cloud.edu.vn/privkey.pem ~/.minio/certs/CAs/private.key
-#Bước 8.6. Visit https://s3c.cloud.edu.vn:9000 in the browser
+#cp /etc/letsencrypt/live/s3c.company.vn/fullchain.pem ~/.minio/certs/CAs/public.crt
+#cp /etc/letsencrypt/live/s3c.company.vn/privkey.pem ~/.minio/certs/CAs/private.key
+#Bước 8.6. Visit https://s3c.company.vn:9000 in the browser
 #Tham khảo: https://www.digitalocean.com/community/tutorials/how-to-set-up-an-object-storage-server-using-minio-on-ubuntu-18-04 
 
 fi
