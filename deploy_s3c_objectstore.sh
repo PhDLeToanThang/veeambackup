@@ -64,12 +64,13 @@ echo 'Documentation=https://docs.min.io' >> minio.service
 echo 'Wants=network-online.target' >> minio.service
 echo 'After=network-online.target' >> minio.service
 echo 'AssertFileIsExecutable=/usr/local/bin/minio' >> minio.service
+
 echo '[Service]' >> minio.service
 echo 'WorkingDirectory=/usr/local/' >> minio.service
 echo 'User="$minio"' >> minio.service
 echo 'Group="$minio"' >> minio.service
-echo 'ProtectProc="invisible"' >> minio.service
-echo 'EnvironmentFile="/etc/default/minio"' >> minio.service
+echo '# ProtectProc="invisible"' >> minio.service
+echo 'EnvironmentFile=/etc/default/minio' >> minio.service
 echo 'ExecStartPre=/bin/bash -c "if [ -z \"${MINIO_VOLUMES}\" ]; then echo \"Variable MINIO_VOLUMES not set in /etc/default/minio\"; exit 1; fi"' >> minio.service
 echo 'ExecStart=/usr/local/bin/minio server $MINIO_OPTS $MINIO_VOLUMES' >> minio.service
 echo 'Restart="always"' >> minio.service
@@ -77,6 +78,7 @@ echo 'LimitNOFILE=1048576' >> minio.service
 echo 'TasksMax=infinity' >> minio.service
 echo 'TimeoutStopSec=infinity' >> minio.service
 echo 'SendSIGKILL=no' >> minio.service
+
 echo '[Install]' >> minio.service
 echo 'WantedBy=multi-user.target' >> minio.service
 
