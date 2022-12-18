@@ -93,8 +93,12 @@ sudo ufw enable
 systemctl daemon-reload
 systemctl enable minio
 systemctl start minio
+
 #Sau đó, ta có thể kiểm tra lại status của service bằng lệnh
 #systemctl status minio
+# Debug minio.service if Publish Server or Audit Logs to an External Service
+# sudo journalctl -u minio.service
+# https://github.com/minio/minio/issues/8302  (But I didn't understand, why minio works after the removed user-groups)
 
 sudo systemctl start minio
 #Như hình trên là minIO đã start thành công.
