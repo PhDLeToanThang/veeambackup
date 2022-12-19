@@ -69,6 +69,7 @@ Below are the most notable features of Pritunl VPN that makes it an option for m
 Pritunl VPN presents an distributed and scalable infrastructure that quickly and easily scale to thousands of users, having high availability in the cloud environment without the need for expensive proprietary hardware. It works on server-client architecture, where servers and users are configured on the VPN server and clients profiles are downloaded to be used on the clients.
 Pritunl is built on MongoDB, a reliable and scalable database that can be quickly deployed. With built in support for replication a reliable database can be setup in minutes making a Pritunl cluster deployment fast and easy.
 
+![image](https://user-images.githubusercontent.com/106635733/208446860-c3a5bcf6-600d-4e5b-81c0-76fdec869ac2.png)
 Installing Pritunl VPN server on Ubuntu 20.04 To install Pritunl VPN server on Ubuntu 20.04, we are going to follow a number of steps as stated below:
 wget https://raw.githubusercontent.com/PhDLeToanThang/veeambackup/master/vpnenterprise.sh && bash ./vpnenterprise.sh
 
