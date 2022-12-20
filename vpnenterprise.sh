@@ -1,3 +1,5 @@
+#!/bin/bash
+
 #Step 1: Update your system
 #First update and upgrade your system before beginning installation by running the below commands:
 sudo apt-get update -y
