@@ -75,3 +75,30 @@ wget https://raw.githubusercontent.com/PhDLeToanThang/veeambackup/master/vpnente
 
 #  Phần 3. Deploy S3c Object Storage:
 wget https://raw.githubusercontent.com/PhDLeToanThang/veeambackup/master/deploy_s3c_objectstore.sh && bash ./deploy_s3c_objectstore.sh
+
+#  Phần 4. Deploy and configure VTL Server Virtual Tape Library Readonly Storage vs Multiple-LTO:
+
+
+#  Phần 5. Backup / Restore Application Items (application aware image):
+These files are explained in the whitepaper, script code Consistent Protection of MySQL, MariaDB, Domino Lotus, DB2, Oracle RMAN, Exchange DAG, SharePoint Server, AD-DC, ADFS SSO, BigData Apache Spark, VMware vSphere BigData Extention with Veeam Availability Suite 9 - 11.a"
+1. MySQL vs MariaDB:
+
+2. Domino Lotus R5-R9:
+
+3. DB2/Windows hoặc DB2/Linux/AIX
+
+4. MS-SQL Standard, DWH, Performance Tuning, Cluster Failover 
+
+5. ORACLE RMAN/RAC:
+
+6. Exchange DAG
+
+7. SharePoint Farm
+
+8. Active Directory, FSMO vs ADFS
+
+9. Apache Spark BigData
+
+10. SAP/HANA
+
+11. VMware vSphere BigData Extention
