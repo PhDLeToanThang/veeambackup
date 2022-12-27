@@ -3,13 +3,16 @@ clear
 cd ~
 ############### Tham số cần thay đổi ở đây ###################
 echo "FQDN: e.g: s3c.company.vn"   # Đổi địa chỉ web thứ nhất Website Master for Resource code - để tạo cùng 1 Source code duy nhất 
-read -e FQDN
+read -e fqdn
 echo "PORT: e.g: 2022"   # Đổi port để tạo truy cập duy nhất 
-read -e PORT
+read -e port
 echo "minio: e.g: minio"   # MINIO_ACCES_KEY 
 read -e minio
 echo "SECRET: e.g: ABBA2@B-h01_quy3n"   # Mật khẩu MINIO_SECRET_KEY 
-read -e SECRET
+read -e secret
+echo "Email create SSL/TLS from Let's encrypt: e.g: username@company.vn"   # Mật khẩu MINIO_SECRET_KEY 
+read -e email
+
 echo "run install? (y/n)"
 read -e run
 if [ "$run" == n ] ; then
@@ -42,10 +45,10 @@ chown $minio:$minio /etc/minio
 chown $minio:$minio /usr/local/share/minio
 
 #sudo touch /etc/default/minio
-echo 'MINIO_ACCESS_KEY="$minio"' >> /etc/default/minio
-echo 'MINIO_VOLUMES="/usr/local/share/minio/"' >> /etc/default/minio
-echo 'MINIO_OPTS="-C /etc/minio --address $FQDN:9000 --console-address $FQDN:$PORT"' >> /etc/default/minio
-echo 'MINIO_SECRET_KEY="$SECRET"' >> /etc/default/minio
+echo 'MINIO_ACCESS_KEY=$minio' >> /etc/default/minio
+echo 'MINIO_VOLUMES=/usr/local/share/minio/' >> /etc/default/minio
+echo 'MINIO_OPTS="-C /etc/minio --address $fqdn:9000 --console-address $fqdn:$PORT"' >> /etc/default/minio
+echo 'MINIO_SECRET_KEY=$SECRET' >> /etc/default/minio
 
 #MINIO_VOLUMES là directory sẽ chứa dữ liệu đã tạo ở trên
 #-C flag khai báo nơi sẽ chứa các file config của minIO
@@ -87,7 +90,7 @@ mv minio.service /etc/systemd/system
 #Tiếp theo ta dùng lệnh sau để mở port 9000 trên server:
 sudo ufw allow 9000
 sudo ufw allow 9090
-sudo ufw allow $PORT
+sudo ufw allow $port
 sudo ufw enable
 
 #Vậy là quá trình chuẩn bị đã hoàn tất, tiếp theo ta sẽ tiến hành start service
@@ -127,10 +130,12 @@ sudo apt update
 sudo apt upgrade
 #Finally, install certbot:
 sudo apt install certbot
+sudo apt-get -s autoremove
 
 #Next, you will use certbot to generate a new SSL certificate.
 #Since Ubuntu 18.04 doesn’t yet support automatic installation, you will use the certonly command and --standalone to obtain the certificate:
-sudo certbot certonly --standalone -d $FQDN
+sudo certbot certonly --standalone --agree-tos --no-eff-email --staple-ocsp --preferred-challenges http -m $email -d $fqdn
+#sudo certbot certonly --standalone -d $fqdn
 
 #--standalone means that this certificate is for a built-in standalone web server. For more information on this, see our How To Use Certbot Standalone Mode to Retrieve Let’s Encrypt SSL Certificates on Ubuntu 18.04 tutorial.
 #You will receive the following output:
