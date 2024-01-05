@@ -1,0 +1,17 @@
+- name: Veeam Backup Enterprise Manager Install
+  gather_facts: no
+  hosts: veeam
+  tasks:
+    - include_role:
+        name: veeamhub.veeam.veeam_vas
+        tasks_from: em_install
+      vars:
+        version: "11"
+        iso_download: true
+        license: true #mandatory for EM
+        source_license: "/root/ansible/license.lic"
+        sql_express_setup: false
+        sql_instance: "sql.contoso.local"
+        sql_username: "svc_veeam"
+        sql_password: "ChangeM3!"
+        # https://docs.ansible.com/ansible/latest/user_guide/playbooks_vault.html#single-encrypted-variable

@@ -1,0 +1,16 @@
+- name: Backup Enterprise Manager Upgrade
+  hosts: veeam
+  tasks:
+    - include_role:
+        name: veeamhub.veeam.veeam_vas
+        tasks_from: em_upgrade
+      vars:
+        version: "12"
+        iso_download: true
+        license: true
+        source_license: "/root/ansible/license.lic"
+        sql_instance: "sql.contoso.local"
+        sql_database: "VeeamBackupReporting"
+        sql_username: "sa"
+        sql_password: "ChangeM3!"
+        # https://docs.ansible.com/ansible/latest/user_guide/playbooks_vault.html#single-encrypted-variable

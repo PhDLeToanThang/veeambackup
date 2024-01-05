@@ -1,0 +1,20 @@
+- name: Veeam Backup Enterprise Manager Install including Cloud Connect Portal
+  gather_facts: no
+  hosts: veeam
+  tasks:
+    - include_role:
+        name: veeamhub.veeam.veeam_vas
+        tasks_from: em_install
+      vars:
+        version: "12"
+        iso_download: true
+        license: true #mandatory for EM
+        source_license: "/root/ansible/license.lic"
+        cloud_connect: true
+        sql_install_username: "sql_install"
+        sql_install_password: "ChangeM3!"
+        sql_service_username: "svc_sql"
+        sql_service_password: "ChangeM3!"
+        sql_username: "sa"
+        sql_password: "ChangeM3!"
+        # https://docs.ansible.com/ansible/latest/user_guide/playbooks_vault.html#single-encrypted-variable

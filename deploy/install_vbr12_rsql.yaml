@@ -1,0 +1,16 @@
+- name: Veeam Backup & Replication Install with Remote Microsoft SQL Server (v12+)
+  hosts: veeam
+  tasks:
+    - include_role:
+        name: veeamhub.veeam.veeam_vas
+        tasks_from: vbr_install
+      vars:
+        version: "12"
+        license: true
+        source_license: "/root/ansible/license.lic"
+        sql_express_setup: false
+        sql_engine: "0" # 0-MSSQL / 1-Postgres (default)
+        sql_instance: "sql.contoso.local"
+        sql_username: "svc_veeam"
+        sql_password: "ChangeM3!"
+        # https://docs.ansible.com/ansible/latest/user_guide/playbooks_vault.html#single-encrypted-variable

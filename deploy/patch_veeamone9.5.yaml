@@ -1,0 +1,11 @@
+- name: Veeam ONE Patch
+  hosts: veeam
+  tasks:
+    - include_role:
+        name: veeamhub.veeam.veeam_vas
+        tasks_from: one_patch
+      vars:
+        source: "C:\\install\\"
+        patch_file: "VeeamONE_9.5.4.4587_Update#4a.exe"
+        one_password: "ChangeM3!"
+        # https://docs.ansible.com/ansible/latest/user_guide/playbooks_vault.html#single-encrypted-variable

@@ -1,0 +1,9 @@
+- name: Veeam Backup & Replication Patch
+  hosts: veeam
+  tasks:
+    - include_role:
+        name: veeamhub.veeam.veeam_vas
+        tasks_from: vbr_patch
+      vars:
+        source: "C:\\install\\"
+        patch_file: "VeeamBackup&Replication_10.0.0.4461.update0.exe"

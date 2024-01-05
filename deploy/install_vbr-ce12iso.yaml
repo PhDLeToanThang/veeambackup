@@ -1,0 +1,17 @@
+- name: Veeam Backup & Replication Install
+  hosts: veeam
+  tasks:
+    - include_role:
+        name: veeamhub.veeam.veeam_vas
+        tasks_from: vbr_install
+      vars:
+        version: "12"
+        destination: "C:\\install\\"
+        destination_iso_file: "VeeamBackup&Replication_12.0.0.1420_20230209.iso"
+        sql_install_username: "sql_install"
+        sql_install_password: "ChangeM3!"
+        sql_service_username: "svc_sql"
+        sql_service_password: "ChangeM3!"
+        sql_username: "sa"
+        sql_password: "ChangeM3!"
+        # https://docs.ansible.com/ansible/latest/user_guide/playbooks_vault.html#single-encrypted-variable

@@ -1,0 +1,12 @@
+- name: Veeam Backup & Replication (Cloud Connect) Upgrade
+  hosts: veeam
+  tasks:
+    - include_role:
+        name: veeamhub.veeam.veeam_vas
+        tasks_from: vbr_upgrade
+      vars:
+        version: "12"
+        iso_download: true
+        license: true
+        source_license: "/root/ansible/license.lic"
+        cloud_connect: true

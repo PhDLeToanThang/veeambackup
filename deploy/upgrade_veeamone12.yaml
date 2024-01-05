@@ -1,0 +1,30 @@
+- name: Veeam ONE Upgrade
+  gather_facts: no
+  hosts: veeam
+
+  vars:
+    version: "12"
+    iso_download: false  #this way ISO is only downloaded once
+    license: true
+    source_license: "/root/ansible/license.lic"
+    one_username: "svc_one"
+    one_password: "ChangeM3!"
+    # https://docs.ansible.com/ansible/latest/user_guide/playbooks_vault.html#single-encrypted-variable
+  tasks:
+    - name: Veeam ONE Server upgrade tasks
+      include_role:
+        name: veeamhub.veeam.veeam_vas
+        tasks_from: one_server_upgrade
+      vars:
+        iso_download: true  #this way ISO is only downloaded once
+    - name: Veeam ONE Web UI upgrade tasks
+      include_role:
+        name: veeamhub.veeam.veeam_vas
+        tasks_from: one_web_ui_upgrade
+    - name: Veeam ONE Monitoring Client upgrade tasks
+      include_role:
+        name: veeamhub.veeam.veeam_vas
+        tasks_from: one_client_upgrade
+    - name: Rebooting server now to complete upgrade
+      ansible.windows.win_reboot:
+        msg: Reboot initiated by Ansible to complete Veeam ONE upgrade

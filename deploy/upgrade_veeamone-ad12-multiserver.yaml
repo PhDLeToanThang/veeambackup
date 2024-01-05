@@ -1,0 +1,47 @@
+- name: Veeam ONE Advanced Deployment - Veeam ONE Server
+  gather_facts: no
+  hosts: server
+  tasks:
+    - name: Veeam ONE Server upgrade tasks
+      include_role:
+        name: veeamhub.veeam.veeam_vas
+        tasks_from: one_server_upgrade
+      vars:
+        version: "12"
+        iso_download: true
+        license: true
+        source_license: "/root/ansible/license.lic"
+        sql_instance: "sql.contoso.local"
+        sql_database: "VeeamOne"
+        one_username: "contoso\\jsmith"
+        one_password: "ChangeM3!"
+        # https://docs.ansible.com/ansible/latest/user_guide/playbooks_vault.html#single-encrypted-variable
+
+- name: Veeam ONE Advanced Deployment - Veeam Web UI
+  hosts: web
+  gather_facts: no
+  tasks:
+    - name: Veeam ONE Web UI upgrade tasks
+      include_role:
+        name: veeamhub.veeam.veeam_vas
+        tasks_from: one_web_ui_upgrade
+      vars:
+        version: "12"
+        iso_download: true
+        one_username: "contoso\\jsmith"
+        one_password: "ChangeM3!"
+        one_server: "server.contoso.local"
+        # https://docs.ansible.com/ansible/latest/user_guide/playbooks_vault.html#single-encrypted-variable
+
+- name: Veeam ONE Advanced Deployment - Monitoring Client
+  hosts: client
+  gather_facts: no
+  tasks:
+    - name: Veeam ONE Monitoring Client upgrade tasks
+      include_role:
+        name: veeamhub.veeam.veeam_vas
+        tasks_from: one_client_upgrade
+      vars:
+        version: "12"
+        iso_download: true
+        one_server: "server.contoso.local"
