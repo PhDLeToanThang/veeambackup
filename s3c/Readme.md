@@ -1,2 +1,4 @@
 #  Phần 3. Deploy S3c Object Storage:
-wget https://raw.githubusercontent.com/PhDLeToanThang/veeambackup/master/deploy_s3c_objectstore.sh && bash ./deploy_s3c_objectstore.sh
+Install version 2 (new):
+
+wget https://raw.githubusercontent.com/PhDLeToanThang/veeambackup/master/install_s3c_objectstorage_v2.sh && bash ./install_s3c_objectstorage_v2.sh
