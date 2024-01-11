@@ -81,13 +81,22 @@ chown $minio:$minio /$minio
 # tham khảo cấu hình default: https://github.com/minio/minio-service/tree/master/linux-systemd
 #Cập nhật cấu hình minio /etc/default/minio
 
-echo 'MINIO_ACCESS_KEY=$minio' >> /etc/default/minio
-echo 'MINIO_VOLUMES=/$minio' >> /etc/default/minio
-echo 'MINIO_OPTS="--certs-dir /etc/minio/CAs --address :$port1 --console-address :$port2"' >> /etc/default/minio
-echo 'MINIO_SECRET_KEY=$secret' >> /etc/default/minio
-echo 'MINIO_ROOT_USER=$minio' >> /etc/default/minio
-echo 'MINIO_ROOT_PASSWORD=$secret' >> /etc/default/minio
-echo 'MINIO_CONFIG_ENV_FILE=/etc/default/minio' >> /etc/default/minio
+
+echo "MINIO_ACCESS_KEY=\"$minio\"" >> /etc/default/minio
+echo "MINIO_VOLUMES=/$minio" >> /etc/default/minio
+echo "MINIO_OPTS=\"--certs-dir /etc/minio/CAs --address :$port1 --console-address :$port2\"" >> /etc/default/minio
+echo "MINIO_SECRET_KEY=\"$secret\"" >> /etc/default/minio
+echo "MINIO_ROOT_USER=\"$minio\"" >> /etc/default/minio
+echo "MINIO_ROOT_PASSWORD=\"$secret\"" >> /etc/default/minio
+echo "MINIO_CONFIG_ENV_FILE=/etc/default/minio" >> /etc/default/minio
+
+#echo 'MINIO_ACCESS_KEY=$minio' >> /etc/default/minio
+#echo 'MINIO_VOLUMES=/$minio' >> /etc/default/minio
+#echo 'MINIO_OPTS="--certs-dir /etc/minio/CAs --address :$port1 --console-address :$port2"' >> /etc/default/minio
+#echo 'MINIO_SECRET_KEY=$secret' >> /etc/default/minio
+#echo 'MINIO_ROOT_USER=$minio' >> /etc/default/minio
+#echo 'MINIO_ROOT_PASSWORD=$secret' >> /etc/default/minio
+#echo 'MINIO_CONFIG_ENV_FILE=/etc/default/minio' >> /etc/default/minio
 
 #MINIO_ROOT_USER: $minio
 #MINIO_ROOT_PASSWORD: $secret
@@ -103,9 +112,11 @@ echo 'MINIO_CONFIG_ENV_FILE=/etc/default/minio' >> /etc/default/minio
 curl -O https://raw.githubusercontent.com/PhDLeToanThang/veeambackup/master/s3c/minio.service
 
 #sua gia tri User
-sed -i 's/User=minio-user/User=$minio/g' minio.service
+#sed -i 's/User=minio-user/User=$minio/g' minio.service
+sed -i "s/User=minio-user/User=$minio/g" minio.service
 # sua gia tri group
-sed -i 's/Group=minio-user/Group=$minio/g' minio.service
+#sed -i 's/Group=minio-user/Group=$minio/g' minio.service
+sed -i "s/Group=minio-user/Group=$minio/g" minio.service
 
 #move vào /etc/systemd/system Minio service descriptor file lệnh download:
 mv minio.service /etc/systemd/system
