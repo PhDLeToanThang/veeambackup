@@ -107,35 +107,13 @@ sed -i 's/User=minio-user/User=$minio/g' minio.service
 # sua gia tri group
 sed -i 's/Group=minio-user/Group=$minio/g' minio.service
 
-
 #move vào /etc/systemd/system Minio service descriptor file lệnh download:
 mv minio.service /etc/systemd/system
+
 #Tiếp theo ta dùng lệnh sau để mở port 9000 trên server:
 sudo ufw allow $port1:$port2/tcp
 sudo ufw allow 9090
-sudo ufw enable
-
-#Vậy là quá trình chuẩn bị đã hoàn tất, tiếp theo ta sẽ tiến hành start service
-systemctl daemon-reload
-systemctl enable minio
-systemctl start minio
-
-#Sau đó, ta có thể kiểm tra lại status của service bằng lệnh
-#systemctl status minio
-# Debug minio.service if Publish Server or Audit Logs to an External Service
-# sudo journalctl -u minio.service
-# https://github.com/minio/minio/issues/8302  (But I didn't understand, why minio works after the removed user-groups)
-
-#In this step, you will secure access to your Minio server using a private key and public certificate that has been obtained from a certificate authority (CA), in this case Let’s Encrypt. To get a free SSL certificate, you will use Certbot.
-#First, allow HTTP and HTTPS access through your firewall. To do this, open port 80, which is the port for HTTP:
-#sudo ufw allow 80
-#sudo ufw allow 443 #open up port 443 for HTTPS
-#Once you’ve added these rules, check on your firewall’s status with the following command:
-sudo ufw status verbose
-
-#Then update the package list:
-sudo apt update -y 
-sudo apt upgrade -y
+sudo ufw allow 22
 
 # Cách 1: Tự tạo chữ ký số SSL/TLS cho Minio trong mạng LAN vì Các công cụ Backup/Restore đều kết nối VPN tới LAN:
 #Securing Access to MinIO Server with a Self-Signed Certificate
@@ -166,7 +144,6 @@ sudo chown $minio:$minio /etc/minio/CAs/public.crt
 #Press ENTER to accept.
 
 #Finally, install certbot:
-
 #sudo apt install certbot -y 
 #sudo apt-get -s autoremove -y
 #Next, you will use certbot to generate a new SSL certificate.
@@ -193,10 +170,14 @@ sudo chown $minio:$minio /etc/minio/CAs/public.crt
 #Bước 8.6. Visit https://s3c.company.vn:9000 in the browser
 #Tham khảo: https://www.digitalocean.com/community/tutorials/how-to-set-up-an-object-storage-server-using-minio-on-ubuntu-18-04 
 
-sudo systemctl restart minio
+#Vậy là quá trình chuẩn bị đã hoàn tất, tiếp theo ta sẽ tiến hành start service
+systemctl daemon-reload
+systemctl enable minio
+systemctl restart minio
 
 #Check the status:
 sudo systemctl status minio
+sudo ufw enable
 
 #Output:
 #minio.service - MinIO
