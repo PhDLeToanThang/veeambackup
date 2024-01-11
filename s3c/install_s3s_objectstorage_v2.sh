@@ -14,6 +14,8 @@ echo "SECRET/Password key: e.g: ABBA2@B-h01_quy3n"   # Mật khẩu MINIO_SECRET
 read -e secret
 echo "Email create SSL/TLS from Let's encrypt: e.g: username@company.vn"   # Mật khẩu MINIO_SECRET_KEY 
 read -e email
+echo "ipv4 local - LAN network hosting after NAT: e.g: 192.168.0.113"   # ipv4 local
+read -e ipv4lan
 
 echo "run install? (y/n)"
 read -e run
@@ -143,17 +145,15 @@ sudo apt upgrade -y
 sudo wget https://github.com/minio/certgen/releases/download/v1.2.0/certgen_1.2.0_linux_amd64.deb
 sudo dpkg -i certgen_1.2.0_linux_amd64.deb
 # If you want to access the MinIO server via your server’s IP address only, generate a certificate for it using the following command:
-# sudo certgen -host minio.cloud.edu.vn,192.168.100.15
-sudo certgen -host minio.cloud.edu.vn,192.168.100.15
+sudo certgen -host $fqdn,$ipv4lan
+
 # Created a new certificate 'public.crt', 'private.key' valid for the following names
-# - "minio.cloud.edu.vn"
-# - "192.168.100.15"
+
 sudo mkdir -p /etc/minio/CAs    # The -p option creates parent directories that do not exist
 sudo mv private.key public.crt /etc/minio/CAs #Move the files with this command (replacing minio as needed)
 # Finally, give ownership of both files to the MinIO user and group (replacing minio as needed):
-#sudo chown $minio:$minio /etc/minio/CAs/private.key
-sudo chown atcomvn:atcomvn /etc/minio/CAs/private.key
-sudo chown atcomvn:atcomvn /etc/minio/CAs/public.crt
+sudo chown $minio:$minio /etc/minio/CAs/private.key
+sudo chown $minio:$minio /etc/minio/CAs/public.crt
 
 # Cách 2: tạo Cert từ Let's encrypt Certbot:  https://gist.github.com/kstevenson722/e7978a75aec25feaa6ad0965ec313e2d
 #sudo apt install software-properties-common -y
@@ -172,10 +172,7 @@ sudo chown atcomvn:atcomvn /etc/minio/CAs/public.crt
 #Next, you will use certbot to generate a new SSL certificate.
 #Since Ubuntu 18.04 doesn’t yet support automatic installation, you will use the certonly command and --standalone to obtain the certificate:
 #minio đang dùng port 9000 https và port 9001 https cho web user access:
-#sudo certbot certonly --standalone --agree-tos --no-eff-email --staple-ocsp --preferred-challenges http -m $email -d $fqdn --http-01-port 9000
-#sudo certbot certonly --standalone --preferred-challenges http -d minio.cloud.edu.vn --http-01-port 9000
-# ví dụ: sudo certbot certonly --standalone --agree-tos --no-eff-email --staple-ocsp --preferred-challenges http -m thang.letoan@atcom.vn -d minio.cloud.edu.vn --http-01-port 9000
-#sudo certbot certonly --standalone --preferred-challenges http -d $fqdn -d www.your_domain.com --http-01-port 9000
+#sudo certbot certonly --standalone --agree-tos --no-eff-email --staple-ocsp --preferred-challenges http -m $email -d $fqdn
 # Thay thế `your_domain.com` và `www.your_domain.com` bằng tên miền của bạn hoặc các tên miền mà bạn muốn tạo chứng chỉ SSL/TLS cho.
 # Lựa chọn `--preferred-challenges http` sẽ yêu cầu Certbot sử dụng thử thách HTTP để xác minh tên miền của bạn.
 # Lựa chọn `--http-01-port 9000` sẽ chỉ định cổng 9000 cho Certbot sử dụng khi xác minh tên miền bằng thử thách HTTP. 
@@ -211,7 +208,7 @@ sudo systemctl status minio
 #      Tasks: 14
 #     Memory: 93.9M
 #     CGroup: /system.slice/minio.service
-#             └─133126 /usr/local/bin/minio server --certs-dir /etc/minio/CAs --address :9000 --console-address :9001 /mythuat2022
+#             └─133126 /usr/local/bin/minio server --certs-dir /etc/minio/CAs --address :9000 --console-address :9001 /$minio
 #
 #Jan 10 08:07:48 miniopod1 systemd[1]: Started MinIO.
 #Jan 10 08:07:48 miniopod1 minio[133126]: MinIO Object Storage Server
@@ -219,8 +216,8 @@ sudo systemctl status minio
 #Jan 10 08:07:48 miniopod1 minio[133126]: License: GNU AGPLv3 <https://www.gnu.org/licenses/agpl-3.0.html>
 #Jan 10 08:07:48 miniopod1 minio[133126]: Version: RELEASE.2024-01-05T22-17-24Z (go1.21.5 linux/amd64)
 #Jan 10 08:07:48 miniopod1 minio[133126]: Status:         1 Online, 0 Offline.
-#Jan 10 08:07:48 miniopod1 minio[133126]: S3-API: https://192.168.100.140:9000  https://127.0.0.1:9000
-#Jan 10 08:07:48 miniopod1 minio[133126]: Console: https://192.168.100.140:9001 https://127.0.0.1:9001
+#Jan 10 08:07:48 miniopod1 minio[133126]: S3-API: https://ipv4lan:9000  https://127.0.0.1:9000
+#Jan 10 08:07:48 miniopod1 minio[133126]: Console: https://ipv4lan:9001 https://127.0.0.1:9001
 #Jan 10 08:07:48 miniopod1 minio[133126]: Documentation: https://min.io/docs/minio/linux/index.html
 #Jan 10 08:07:48 miniopod1 minio[133126]: Warning: The standard parity is set to 0. This can lead to data loss.
 fi
