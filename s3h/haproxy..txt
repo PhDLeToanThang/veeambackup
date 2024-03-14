@@ -1,0 +1,76 @@
+#  Author: PhD. Le Toan Thang
+# ============================================================================#
+#      H A P r o x y 2.9 -  M i n i o  deploy HA Cluster DC-DR Storage		  #
+# ============================================================================#
+
+# ref: https://docs.haproxy.org/2.9/configuration.html
+
+frontend s3h-http
+    bind *:7000
+    mode tcp
+    tcp-request inspect-delay 10s
+    tcp-request content accept if { req_ssl_hello_type 1 }
+    acl acl5 req.ssl_sni -m end s3h-1.minio.vn
+    acl acl6 req.ssl_sni -m end s3h-2.minio.vn
+	acl acl7 req.ssl_sni -m end s3h-3.minio.vn
+	acl acl8 req.ssl_sni -m end s3h-4.minio.vn
+    use_backend s3h-1 if acl5
+	    use_backend s3h-2 if acl6
+		    use_backend s3h-3 if acl7
+			    use_backend s3h-4 if acl8
+    default_backend s3h-1 s3h-2 s3h-3 s3h-4
+
+backend s3h-1
+    mode tcp
+    balance source
+    server s3h-1 10.10.0.5:7000
+	
+backend s3h-2
+    mode tcp
+    balance source
+    server s3h-2 10.10.0.6:7000
+
+backend s3h-3
+    mode tcp
+    balance source
+    server s3h-3 10.10.0.7:7000
+
+backend s3h-4
+    mode tcp
+    balance source
+    server s3h-4 10.10.0.8:7000	
+
+frontend s3h-https
+    bind *:7001
+    mode tcp
+    tcp-request inspect-delay 10s
+    tcp-request content accept if { req_ssl_hello_type 1 }
+    acl acl5 req.ssl_sni -m end s3h-1.minio.vn
+	    acl acl6 req.ssl_sni -m end s3h-2.minio.vn
+		    acl acl7 req.ssl_sni -m end s3h-3.minio.vn
+			    acl acl8 req.ssl_sni -m end s3h-4.minio.vn
+    use_backend s3hs-1 if acl5
+	   use_backend s3hs-2 if acl6
+	      use_backend s3hs-3 if acl7
+		     use_backend s3hs-4 if acl8
+    default_backend s3hs-1 s3hs-2 s3hs-3 s3hs-4
+
+backend s3hs-1
+    mode tcp
+    balance source
+    server s3h-1 10.10.0.5:7001
+	
+backend s3hs-2
+    mode tcp
+    balance source
+    server s3h-2 10.10.0.6:7001	
+	
+backend s3hs-3
+    mode tcp
+    balance source
+    server s3h-3 10.10.0.7:7001
+	
+backend s3hs-4
+    mode tcp
+    balance source
+    server s3h-4 10.10.0.8:7001
