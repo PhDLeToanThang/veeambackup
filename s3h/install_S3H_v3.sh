@@ -1,5 +1,5 @@
 #############################################
-#  minio 10.3.2024 
+#  minio 10.3.2024 vs certgen_1.2.1 linux_amd64.deb
 ############################################
 #!/bin/bash
 clear
@@ -104,14 +104,15 @@ echo "MINIO_CONFIG_ENV_FILE=/etc/default/minio" >> /etc/default/minio
 #MINIO_ROOT_PASSWORD: $secret
 #Access key:  tạo trên bucket của minio port web https://ip:9000
 #Secret key:  tạo trên bucket của minio port web https://ip:9000
-sudo apt install ubuntu-desktop -y#server location: tự sửa theo cấu trúc, vị trí địa lý, ví dụ: vn-east-rack1
+
+#server location: tự sửa theo cấu trúc, vị trí địa lý, ví dụ: vn-east-rack1
 #MINIO_VOLUMES là directory sẽ chứa dữ liệu đã tạo ở trên
 #-C flag khai báo nơi sẽ chứa các file config của minIO
 #–address** khai báo IP của server/VPS chạy minIO, kèm theo port
 
 # tham khảo file cấu hình https://blog.min.io/configuring-minio-with-systemd/
 #Tiếp theo, để minIO có thể chạy như một service, ta sẽ tải về Minio Systemd Startup Script 
-curl -O https://raw.githubusercontent.com/PhDLeToanThang/veeambackup/master/s3c/minio.service
+curl -O https://raw.githubusercontent.com/PhDLeToanThang/veeambackup/master/s3h/minio.service?token=GHSAT0AAAAAACPRQIOZWBVRS65UX7WMUXTUZPSYHYA
 
 #sua gia tri User
 #sed -i 's/User=minio-user/User=$minio/g' minio.service
@@ -121,7 +122,7 @@ sed -i "s/User=minio-user/User=$minio/g" minio.service
 sed -i "s/Group=minio-user/Group=$minio/g" minio.service
 
 #move vào /etc/systemd/system Minio service descriptor file lệnh download:
-mv minio.service /etc/systemd/system
+mv minio.service?token=GHSAT0AAAAAACPRQIOZWBVRS65UX7WMUXTUZPSYHYA /etc/systemd/system/minio.service
 
 #Tiếp theo ta dùng lệnh sau để mở port 9000 trên server:
 sudo ufw allow $port1:$port2/tcp
@@ -131,9 +132,10 @@ sudo ufw allow 22
 # Cách 1: Tự tạo chữ ký số SSL/TLS cho Minio trong mạng LAN vì Các công cụ Backup/Restore đều kết nối VPN tới LAN:
 #Securing Access to MinIO Server with a Self-Signed Certificate
 #In this step, you will use certgen, a Go application from the developers of MinIO, to generate a self-signed certificate.
-#The latest version at the time of writing is version 1.2.0.
+#The latest version at the time of writing is version 1.2.1.
 # https://www.digitalocean.com/community/tutorials/how-to-set-up-minio-object-storage-server-in-standalone-mode-on-ubuntu-20-04
-sudo wget https://github.com/minio/certgen/releases/download/v1.2.0/certgen_1.2.0_linux_amd64.deb
+
+sudo wget https://github.com/minio/certgen/releases/download/v1.2.1/certgen_1.2.1_linux_amd64.deb
 sudo dpkg -i certgen_1.2.0_linux_amd64.deb
 # If you want to access the MinIO server via your server’s IP address only, generate a certificate for it using the following command:
 sudo certgen -host $fqdn,$ipv4lan
