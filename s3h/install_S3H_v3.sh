@@ -122,7 +122,7 @@ sed -i "s/User=minio-user/User=$minio/g" minio.service
 sed -i "s/Group=minio-user/Group=$minio/g" minio.service
 
 #move vào /etc/systemd/system Minio service descriptor file lệnh download:
-mv minio.service?token=GHSAT0AAAAAACPRQIOZWBVRS65UX7WMUXTUZPSYHYA /etc/systemd/system/minio.service
+mv minio.service /etc/systemd/system/minio.service
 
 #Tiếp theo ta dùng lệnh sau để mở port 9000 trên server:
 sudo ufw allow $port1:$port2/tcp
