@@ -112,7 +112,7 @@ echo "MINIO_CONFIG_ENV_FILE=/etc/default/minio" >> /etc/default/minio
 
 # tham khảo file cấu hình https://blog.min.io/configuring-minio-with-systemd/
 #Tiếp theo, để minIO có thể chạy như một service, ta sẽ tải về Minio Systemd Startup Script 
-curl -O https://raw.githubusercontent.com/PhDLeToanThang/veeambackup/master/s3h/minio.service?token=GHSAT0AAAAAACPRQIOZWBVRS65UX7WMUXTUZPSYHYA
+curl -O https://raw.githubusercontent.com/PhDLeToanThang/Web3.0/main/haproxy/minio.service
 
 #sua gia tri User
 #sed -i 's/User=minio-user/User=$minio/g' minio.service
@@ -136,7 +136,7 @@ sudo ufw allow 22
 # https://www.digitalocean.com/community/tutorials/how-to-set-up-minio-object-storage-server-in-standalone-mode-on-ubuntu-20-04
 
 sudo wget https://github.com/minio/certgen/releases/download/v1.2.1/certgen_1.2.1_linux_amd64.deb
-sudo dpkg -i certgen_1.2.0_linux_amd64.deb
+sudo dpkg -i certgen_1.2.1_linux_amd64.deb
 # If you want to access the MinIO server via your server’s IP address only, generate a certificate for it using the following command:
 sudo certgen -host $fqdn,$ipv4lan
 
