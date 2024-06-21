@@ -41,3 +41,40 @@ _Veeam không cung cấp thiết bị Linux sẵn sàng hoạt động để s�
 ## Cài máy chủ Linux
 _Trước khi tiếp tục, hãy tải xuống tệp cài đặt .ISO của bản phân phối Linux được hỗ trợ mà bạn đã chọn và lưu nó ở bất kỳ đâu trong máy tính của bạn._
 
+---
+## Lưu ý:
+UFW Ref: https://helpcenter.veeam.com/archive/backup/110/vsphere/used_ports.html
+_Linux Server:_
+
+The following table describes network ports that must be opened to ensure proper communication with Linux servers.
+
+Each Linux server that is a backup infrastructure component must have these ports opened. If you want to use the server as a backup infrastructure component, you must also open ports that the component role requires.
+
+For example, if you assign the role of a backup repository to your Linux server, you must open ports listed below and also ports listed in the Microsoft Windows/Linux-based Backup Repository section.
+
+The Linux server that acts as an NFS file share requires network ports listed below and also ports listed in the NFS Backup Repository. The Linux server that acts as an SMB file share requires network ports listed below and also ports listed in the SMB Backup Repository.
+```Tables
+From---To---Protocol---Port---Notes
+Backup---Linux---TCP---22---Port used as a control channel from the console to the target Linux host.
+server---server
+				 TCP---6162---Default port used by the Veeam Data Mover.
+							  You can specify a different port while adding the Linux server to the Veeam Backup & Replication infrastructure.
+							  Note that you can specify a different port only if there is no previously installed Veeam Data Mover on this Linux server.
+							  For more information, see Specify Credentials and SSH Settings.
+				TCP---2500 to 33001---Default range of ports used as data transmission channels. 
+									  For every TCP connection that a job uses,one port from this range is assigned.
+Linux---Backup---TCP---2500 to 33001---Default range of ports used as data transmission channels. 
+server---server						  For every TCP connection that a job uses,one port from this range is assigned.
+--------------
+(1) This range of ports applies to newly installed Veeam Backup & Replication starting from version 10.0, without upgrade from previous versions. If you have upgraded from an earlier version of the product, the range of ports from 2500 to 5000 applies to the already added components.
+--------------
+```
+_Nếu không cấu hình UFW của máy chủ Linux Ubuntu Proxy mở cổng 6162 TCP sẽ bị báo lỗi_
+
+![image](https://github.com/PhDLeToanThang/veeambackup/assets/106635733/1cb8aa88-2f9e-4e46-b910-5209ce4dc5f9)
+
+
+
+
+
+
