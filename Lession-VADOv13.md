@@ -1,7 +1,9 @@
 # Bài tổng hợp các câu hỏi về Veeam Backup & Replicate Advanced Design [V13]:
-
 | STT | Câu hỏi | Kiểu AI Tools | Nhóm chủ đề |
-|-----|---------|---------------|-------------|
+|-----|---------|---------------|------------|
+| | GIẢI PHÁP VEEAM BACKUP REPLICATE V13 ||
+| 0 | Hãy trình bày chi tiết Giải pháp và các bước Download, cài, cấu hình, triển khai dựng Virtual Tape Library cho multi-slot Tape media Ảo trên VM ubuntu linux 24.04 của vSphere 8x (giải pháp open source free licensed không bị hạn chế kích thước PVC Storage, không bị giới hạn số mount Storage device, hoặc số slot to Tape), Lưu ý cần có các ảnh minh họa đầy đủ đánh dấu cho từng bước có kích thước full screen html5 khung header và tiêu đề không bị co giãn khác nhau. Vẽ cả sơ đồ miêu tả từng bước format mermaid Graph TD với kích thước bằng khổ A4 cân đối bố cục.  Tham khảo: https://github.com/PhDLeToanThang/automation/issues/3 | chat.z.ai > Magic Design | Virtual Tape Library và vSphere Storage Modern |
+| | GIẢI PHÁP VSPHERE 8x VÀ VCF 9X ||
 | 0 | Hãy trình bày chi tiết trên cùng 1 slide duy nhất nội dung "VMware vCenter 8 - LDAPS & Keycloak Configuration" cần từng bức ảnh minh họa đầy đủ cho từng bước trong slide theo kích thước full screen html5 khung header và tiêu đề không bị co giãn khác nhau. Tham khảo: https://www.atcom.vn/vmware/vsphereicm8x/labs-l0.html | chat.z.ai > AI Slider | SSO và MFA/2FA: TOTP |
 | 1 | Hãy trình bày chi tiết trên cùng 1 slide duy nhất nội dung "Bài 1. VMware vSphere vCenter 8 cấu hình LDAPS với Active Directory và ADFS 2019 DC licensed làm SSO" cần từng bức ảnh minh họa đầy đủ cho từng bước trong slide theo kích thước full screen html5 khung header và tiêu đề không bị co giãn khác nhau. Tham khảo: https://www.atcom.vn/vmware/vsphereicm8x/labs-l1.html | chat.z.ai > AI Slider | SSO và MFA/2FA: No |
 | 2 | Hãy trình bày chi tiết trên cùng 1 slide duy nhất nội dung "Nâng cấp VMware ESXi từ 6.7 lên 8.0" cần từng bức ảnh minh họa đầy đủ cho từng bước trong slide theo kích thước full screen html5 khung header và tiêu đề không bị co giãn khác nhau. Tham khảo: https://www.atcom.vn/vmware/vsphereicm8x/labs-l2.html | chat.z.ai > AI Slider | Nâng cấp vSphere |
